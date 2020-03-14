@@ -57,9 +57,9 @@ def sigmoid_with_growth(growth):
 # fit for various growth rates
 print(cumulative_per_day)
 hypotheses = []
-growth_rates = [0.22, 0.23, 0.24, 0.25]
+growth_rates = [0.23, 0.235, 0.24]
 for g in growth_rates:
-    popt, pcov = curve_fit(sigmoid_with_growth(g), xdata, ydata, maxfev=1000)
+    popt, pcov = curve_fit(sigmoid_with_growth(g), xdata, ydata, maxfev=10000)
     hypotheses.append([*popt, g])
 
 # plot each scenario
@@ -79,7 +79,7 @@ for params in hypotheses:
     midpoint_time = day_0 + datetime.timedelta(days=x0)
     prediction = L / 2
     y = sigmoid(x, *params)
-    print(f"{k}: Expecting to reach {L} by {midpoint_time} ({x0} after initial)")
+    print(f"{k}: Expecting to reach {prediction} by {midpoint_time} ({x0} after initial)")
     pylab.plot(x,y, label=f'L={L}, x0 = {x0}, k = {k}')
 
 pylab.xlabel("Days since first incident") 
